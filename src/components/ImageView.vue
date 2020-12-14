@@ -1,42 +1,51 @@
 <template>
   <div class="image-view">
-    <div class="image"
-      :style="{ 'background-image': `url(${imgList[index]})` }"
-      />
+    <canvas class="cnode" ref='cnode'></canvas>
   </div>
 </template>
 
-<script>
+<script lang='ts'>
 import Vue from 'vue'
-
-const img1 = `./lsp.store/000001.jpg`
-const img2 = `./lsp.store/000002.jpg`
-const img3 = `./lsp.store/000003.jpg`
+import { renderImageData } from '@/util'
 
 export default Vue.extend({
+  props: [ 'imageData' ],
   data() {
     return {
-      img1,
-      imgList: [img1, img2, img3],
-      index: 0,
+      cw: 0,
+      ch: 0,
+    }
+  },
+  watch: {
+    imageData(val: (null | ImageData)) {
+      console.log(val);
+      
+      if (val == null) return
+
+      // renderImageData(val)
+
+      const cnode = this.$refs.cnode as HTMLCanvasElement
+      console.log('cnode');
+      console.log(cnode);
+      
+      cnode.width = val.width
+      cnode.height = val.height
+      const context = cnode.getContext('2d') as CanvasRenderingContext2D
+
+      context.putImageData(val, 0, 0)
     }
   },
   created() {
-    console.log(this.img1);
+
   }
 })
 </script>
 
 <style scoped>
-
-.image {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
+.image-view {
+  min-height: 100vh;
+}
+.cnode {
   width: 100vw;
-  height: 100vh;
-  background-position: 50% 50%;
-  background-size: cover;
 }
 </style>

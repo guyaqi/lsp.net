@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div>
+    <div @click="next">
       <Masthead v-if="!start" @start='$start' />
-      <ImageView v-else />
+      <ImageView v-else :imageData='imageData' />
     </div>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default Vue.extend({
   data() {
     return {
       start: false,
-      imgList: [] as ImgMeta[]
+      imageData: null as (ImageData | null)
     }
   },
   methods: {
@@ -44,12 +44,19 @@ export default Vue.extend({
     touchmove(e: any) {
       e.preventDefault()
     },
-    async more() {
+    async load() {
       console.log(await lsp.init());
+      await lsp.fetchAll()
+    },
+    async next() {
+      if (!this.start) return
+      console.log('next');
+      
+      this.imageData = await lsp.next()
     }
   },
   mounted() {
-    this.more()
+    this.load()
   }
 })
 </script>
