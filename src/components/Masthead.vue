@@ -2,7 +2,7 @@
   <div class="masthead">
     <div class="fg">
       <div class="name">老色胚网</div>
-      <div class="btn-start" @click="$start">开始</div>
+      <div class="btn-start" @click="$start">{{ loading ? '加载中' : '开始' }}</div>
       
       <div class="bottom">
         <div class="hint">
@@ -23,6 +23,7 @@ import Vue from 'vue'
 const bgImg = './lsp.store/000001.jpg'
 
 export default Vue.extend({
+  props: [ 'loading' ],
   data() {
     return {
       bgImg,
@@ -30,7 +31,9 @@ export default Vue.extend({
   },
   methods: {
     $start() {
-      this.$emit('start')
+      if (!this.loading) {
+        this.$emit('start')
+      }
     }
   }
 })

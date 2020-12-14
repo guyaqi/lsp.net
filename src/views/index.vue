@@ -1,7 +1,7 @@
 <template>
   <div>
     <div @click="next">
-      <Masthead v-if="!start" @start='$start' />
+      <Masthead v-if="!start" @start='$start' :loading='loading' />
       <ImageView v-else :imageData='imageData' />
     </div>
   </div>
@@ -25,6 +25,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      loading: true,
       start: false,
       imageData: null as (ImageData | null)
     }
@@ -47,6 +48,7 @@ export default Vue.extend({
     async load() {
       console.log(await lsp.init());
       await lsp.fetchAll()
+      this.loading = false
     },
     async next() {
       if (!this.start) return
