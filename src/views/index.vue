@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div>
     <div>
-      <Masthead v-if="!start" @start='start=true' />
+      <Masthead v-if="!start" @start='$start' />
       <ImageView v-else />
     </div>
   </div>
@@ -16,6 +16,8 @@ import ImageView from '@/components/ImageView.vue'
 
 const lsp = new LSP(conf.storeUrl)
 
+
+
 export default Vue.extend({
   components: {
     Masthead,
@@ -28,6 +30,20 @@ export default Vue.extend({
     }
   },
   methods: {
+    $start() {
+      this.start=true
+      this.controlTouch()
+    },
+    controlTouch() {
+      document.body.addEventListener(
+        'touchmove',
+        this.touchmove,
+        { passive: false }
+      )
+    },
+    touchmove(e: any) {
+      e.preventDefault()
+    },
     async more() {
       console.log(await lsp.init());
     }

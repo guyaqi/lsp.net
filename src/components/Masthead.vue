@@ -3,8 +3,15 @@
     <div class="fg">
       <div class="name">老色胚网</div>
       <div class="btn-start" @click="$start">开始</div>
+      
       <div class="bottom">
-        图库：默认图库
+        <div class="hint">
+          - 提示 - <br />
+          推荐使用浏览器打开<br />
+          在开始之前请上下滑动页面<br />
+          以隐藏屏幕上的工具栏<br />
+          可以获得最佳的体验
+        </div>
       </div>
     </div>
     <div class="bg" :style="{ 'background-image': `url(${bgImg})` }"></div>
@@ -31,6 +38,7 @@ export default Vue.extend({
 
 <style scoped>
 .masthead {
+  position: relative;
   width: 100vw;
   height: 100vh;
   color: #fff;
@@ -38,14 +46,15 @@ export default Vue.extend({
   flex-flow: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 .bg {
   position: absolute;
   z-index: 1;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+  width: calc(100vw + 40px);
+  height: calc(100vh + 40px);
+  top: -20px;
+  left: -20px;
   background-position: 50% 50%;
   background-size: cover;
   filter: blur(18px);
@@ -57,6 +66,7 @@ export default Vue.extend({
 .name {
   font-size: 2.5rem;
   margin-bottom: 1rem;
+  text-align: center;
 }
 .btn-start {
   border: 1px solid #fff;
@@ -64,11 +74,19 @@ export default Vue.extend({
   border-radius: .5rem;
   margin: 0 auto;
   width: fit-content;
+  margin-bottom: 1rem;
 }
 .bottom {
   position: fixed;
   bottom: 2.5rem;
   left: 50%;
   transform: translate(-50%, 0);
+}
+
+.hint {
+  font-size: 0.8rem;
+  max-width: 80vw;
+  margin: 0 auto;
+  text-align: center;
 }
 </style>
